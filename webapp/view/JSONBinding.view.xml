@@ -1,0 +1,263 @@
+<mvc:View
+    xmlns:form="sap.ui.layout.form"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    controllerName="sapips.training.jsonbinding.controller.JSONBinding"
+>
+    <Page
+        id="page"
+        title="{i18n>title}"
+    >
+        <content>
+            <Panel
+                xmlns="sap.m"
+                headerText="Data Binding Basics"
+                class="sapUiResponsiveMargin"
+                width="auto"
+                expanded="true"
+                id="panel0"
+            >
+                <content>
+                    <form:SimpleForm
+                        xmlns:sap.ui.core="sap.ui.core"
+                        editable="true"
+                        layout="ResponsiveGridLayout"
+                        id="form0"
+                    >
+                        <Label
+                            text="Eid"
+                            id="label0"
+                        />
+                        <Input
+                            width="100%"
+                            id="input0"
+                            value="{EmployeeModel>/Eid}"
+                            enabled="{EmployeeModel>/Enabled}"
+                        />
+                        <Label
+                            text="Enabled"
+                            id="Enabled"
+                        />
+                        <CheckBox
+                            selected="{EmployeeModel>/Enabled}"
+                            id="box0"
+                        />
+                    </form:SimpleForm>
+                </content>
+            </Panel>
+
+            <Panel
+                xmlns="sap.m"
+                headerText="Address Details"
+                class="sapUiResponsiveMargin"
+                width="auto"
+                expanded="true"
+                id="panel1"
+            >
+                <content>
+                    <form:SimpleForm
+                        xmlns:sap.ui.core="sap.ui.core"
+                        editable="true"
+                        layout="ResponsiveGridLayout"
+                        id="form1"
+                    >
+                        <form:content>
+                            <Label
+                                text="Address"
+                                id="Address"
+                                class="sapUiSmallMarginBottom"
+                            />
+                            <Text
+                                text="{EmployeeModel>/Address/Street} {EmployeeModel>/Address/Zip} {EmployeeModel>/Address/City} {EmployeeModel>/Address/Country}"
+                                id="Address1"
+                            />
+                            <Link
+                                text="Send Email"
+                                href="{ parts: [ { path: 'EmployeeModel>/Eid' }, { path: 'i18n>domain' }, { path: 'i18n>mailSubject' }, { path: 'i18n>mailBody' } ], formatter: '.formatter.formatMail' }"
+                                id="sendEmailLink"
+                            />
+                            <Label
+                                text="Sales Amount"
+                                id="SalesAmount"
+                                class="sapUiSmallMarginBegin"
+                            />
+                            <Input
+                                width="95.7%"
+                                id="input2"
+                                class="sapUiSmallMarginBegin"
+                                enabled="true"
+                                description="{EmployeeModel>/CurrencyCode}"
+                                value="{ parts: [ {path: 'EmployeeModel>/SalesAmount'}, {path: 'EmployeeModel>/CurrencyCode'} ], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false} }"
+                            />
+                        </form:content>
+                    </form:SimpleForm>
+                </content>
+            </Panel>
+
+            <Panel
+                xmlns:form="sap.ui.layout.form"
+                xmlns:mvc="sap.ui.core.mvc"
+                xmlns="sap.m"
+                headerText="Aggregation Binding"
+                class="sapUiResponsiveMargin"
+                width="auto"
+                expanded="true"
+                id="panel2"
+            >
+                <List
+                    noDataText="Drop list items here"
+                    id="list0"
+                    items="{ProductsModel>/products}"
+                    mode="SingleSelectMaster"
+                    selectionChange="ProductsModel"
+                >
+                    <items>
+                        <ObjectListItem
+                            id="objListItem"
+                            title="{ProductsModel>productname}"
+                            number="{ parts: [{path: 'ProductsModel>unitprice'}, {path: 'ProductsModel>CurrencyCode'}], type: 'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}"
+                            numberUnit="{EmployeeModel>/CurrencyCode}"
+                        >
+                            <attributes>
+                                <ObjectAttribute
+                                    id="obj_stockOnHand"
+                                    text="{ProductsModel>quantityperunit}"
+                                    title="{i18n>stockOnHand}"
+                                />
+                                <ObjectAttribute
+                                    id="odj_stockValue"
+                                    title="{i18n>currentStockValue}"
+                                    text="{ parts: [ {path: 'ProductsModel>unitprice'}, {path: 'ProductsModel>unitinstock'}, {path: 'ProductsModel>/CurrencyCode'} ], formatter: '.formatter.formatStockValue' }"
+                                />
+                            </attributes>
+                        </ObjectListItem>
+                    </items>
+                </List>
+            </Panel>
+
+            <Panel
+                xmlns="sap.m"
+                headerText="Product Details"
+                class="sapUiResponsiveMargin"
+                width="auto"
+                expanded="true"
+                id="panel3"
+            >
+                <content>
+                    <form:SimpleForm
+                        editable="true"
+                        layout="ResponsiveGridLayout"
+                        xmlns:sap.ui.core="sap.ui.core"
+                        id="form3"
+                    >
+                        <form:content>
+                            <Label
+                                id="productIdLbl"
+                                text="Product ID"
+                            />
+                            <Input
+                                id="productIdInput"
+                                value="{ProductsModel>productid}"
+                                editable="false"
+                            />
+
+                            <Label
+                                id="productNameLbl"
+                                text="Product Name"
+                            />
+                            <Input
+                                id="productNameInput"
+                                value="{ProductsModel>productname}"
+                                editable="false"
+                            />
+
+                            <Label
+                                id="supplierIdLbl"
+                                text="Supplier ID"
+                            />
+                            <Input
+                                id="supplierIdInput"
+                                value="{ProductsModel>supplierid}"
+                                editable="false"
+                            />
+
+                            <Label
+                                id="categoryIdLbl"
+                                text="Category ID"
+                            />
+                            <Input
+                                id="categoryIdInput"
+                                value="{ProductsModel>categoryid}"
+                                editable="false"
+                            />
+
+                            <Label
+                                id="quantityPerUnitLbl"
+                                text="Quantity Per Unit"
+                            />
+                            <Input
+                                id="quantityPerUnitInput"
+                                value="{ProductsModel>quantityperunit}"
+                                editable="false"
+                            />
+
+                            <Label
+                                id="unitPriceLbl"
+                                text="Unit Price"
+                            />
+                            <Input
+                                id="unitPriceInput"
+                                value="{ProductsModel>unitprice}"
+                                type="Number"
+                                editable="false"
+                            />
+
+                            <Label
+                                id="unitsInStockLbl"
+                                text="Units In Stock"
+                            />
+                            <Input
+                                id="unitsInStockInput"
+                                value="{ProductsModel>unitinstock}"
+                                type="Number"
+                                editable="false"
+                            />
+
+                            <Label
+                                id="unitsOnOrderLbl"
+                                text="Units On Order"
+                            />
+                            <Input
+                                id="unitsOnOrderInput"
+                                value="{ProductsModel>unitonorder}"
+                                type="Number"
+                                editable="false"
+                            />
+
+                            <Label
+                                id="reorderLevelLbl"
+                                text="Reorder Level"
+                            />
+                            <Input
+                                id="reorderLevelInput"
+                                value="{ProductsModel>reoderlevel}"
+                                type="Number"
+                                editable="false"
+                            />
+
+                            <Label
+                                id="discontinuedLbl"
+                                text="Discontinued"
+                            />
+                            <Input
+                                id="discontinuedInput"
+                                value="{ProductsModel>discontinued}"
+                                editable="false"
+                            />
+                        </form:content>
+                    </form:SimpleForm>
+                </content>
+            </Panel>
+        </content>
+    </Page>
+</mvc:View>
